@@ -2,57 +2,72 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Pedidos Online</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizzaria Italiano</title>
 
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
   margin: 0;
-  padding: 15px;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: #fff;
 }
+
 header {
-  background: #ff6a00;
-  color: white;
+  text-align: center;
   padding: 20px;
-  text-align: center;
-  border-radius: 10px;
+  background: #000;
 }
-.card {
-  background: white;
+
+header h1 {
+  margin: 0;
+  color: #ffd84d;
+}
+
+.container {
   padding: 15px;
-  margin-top: 15px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
-.card input {
-  transform: scale(1.3);
+
+.section {
+  margin-bottom: 20px;
 }
-.total {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 20px;
-  text-align: center;
+
+.section h2 {
+  color: #ffd84d;
+  border-bottom: 1px solid #333;
+  padding-bottom: 5px;
 }
+
+.card {
+  background: #1c1c1c;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin: 5px 0;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
 button {
   width: 100%;
-  padding: 18px;
-  background: #25D366;
-  color: white;
+  padding: 15px;
   font-size: 18px;
+  background: #25d366;
+  color: #000;
   border: none;
-  border-radius: 10px;
-  margin-top: 15px;
+  border-radius: 8px;
   cursor: pointer;
-}
-footer {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 12px;
-  color: #777;
+  margin-top: 20px;
 }
 </style>
 </head>
@@ -60,82 +75,73 @@ footer {
 <body>
 
 <header>
-  <h1>🍔 Lanchonete</h1>
+  <h1>Pizzaria Italiano 🍕</h1>
   <p>Pedidos rápidos pelo WhatsApp</p>
 </header>
 
-<div class="card">
-  <label>
-    <input type="checkbox" data-preco="12" value="X-Burger">
-    X-Burger
-  </label>
-  <strong>R$ 12</strong>
+<div class="container">
+
+  <div class="section">
+    <h2>🍕 Sabores</h2>
+
+    <div class="card">
+      <label><input type="checkbox" value="Mussarela"> Mussarela</label>
+      <label><input type="checkbox" value="Calabresa"> Calabresa</label>
+      <label><input type="checkbox" value="Frango com Catupiry"> Frango com Catupiry</label>
+      <label><input type="checkbox" value="Portuguesa"> Portuguesa</label>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🧀 Borda</h2>
+    <select id="borda">
+      <option>Sem borda</option>
+      <option>Catupiry</option>
+      <option>Cheddar</option>
+    </select>
+  </div>
+
+  <div class="section">
+    <h2>📍 Dados para entrega</h2>
+
+    <input id="nome" placeholder="Seu nome">
+    <input id="rua" placeholder="Rua">
+    <input id="bairro" placeholder="Bairro">
+    <input id="numero" placeholder="Número da casa">
+    <input id="referencia" placeholder="Ponto de referência">
+    <input id="telefone" placeholder="Telefone para contato">
+  </div>
+
+  <button onclick="enviarPedido()">📲 Finalizar pedido no WhatsApp</button>
+
 </div>
-
-<div class="card">
-  <label>
-    <input type="checkbox" data-preco="8" value="Batata Frita">
-    Batata Frita
-  </label>
-  <strong>R$ 8</strong>
-</div>
-
-<div class="card">
-  <label>
-    <input type="checkbox" data-preco="6" value="Refrigerante">
-    Refrigerante
-  </label>
-  <strong>R$ 6</strong>
-</div>
-
-<div class="total">
-  Total: R$ <span id="total">0</span>
-</div>
-
-<button onclick="enviarPedido()">📲 Fazer pedido no WhatsApp</button>
-
-<footer>
-  Sistema simples de pedidos
-</footer>
 
 <script>
-const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-const totalSpan = document.getElementById('total');
-
-checkboxes.forEach(cb => {
-  cb.addEventListener('change', calcularTotal);
-});
-
-function calcularTotal() {
-  let total = 0;
-  checkboxes.forEach(cb => {
-    if (cb.checked) {
-      total += Number(cb.dataset.preco);
-    }
-  });
-  totalSpan.innerText = total;
-}
-
 function enviarPedido() {
-  let pedido = '';
-  let total = totalSpan.innerText;
+  let sabores = [];
+  document.querySelectorAll('input[type=checkbox]:checked')
+    .forEach(item => sabores.push(item.value));
 
-  checkboxes.forEach(cb => {
-    if (cb.checked) {
-      pedido += `- ${cb.value}%0A`;
-    }
-  });
+  let mensagem =
+`🍕 *Pedido de Pizza*
 
-  if (pedido === '') {
-    alert('Selecione pelo menos um item!');
-    return;
-  }
+Sabores:
+- ${sabores.join('\n- ')}
 
-  let telefone = '5581981881666'; // ⚠️ TROQUE AQUI PELO NÚMERO REAL
-  let mensagem = `Olá! Quero fazer o pedido:%0A${pedido}%0ATotal: R$ ${total}`;
+Borda: ${document.getElementById('borda').value}
 
-  let url = `https://wa.me/${telefone}?text=${mensagem}`;
-  window.open(url, '_blank');
+Nome: ${document.getElementById('nome').value}
+Rua: ${document.getElementById('rua').value}
+Bairro: ${document.getElementById('bairro').value}
+Número: ${document.getElementById('numero').value}
+Referência: ${document.getElementById('referencia').value}
+
+📞 Contato: ${document.getElementById('telefone').value}
+`;
+
+  let numero = "5581981881666"; // <-- TROQUE SE PRECISAR
+  let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensagem);
+  window.open(url, "_blank");
 }
 </script>
 
