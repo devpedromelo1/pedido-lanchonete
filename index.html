@@ -3,177 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pizzaria Italiano</title>
+<title>Pedido de Pizza</title>
 
 <style>
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  background: #0f0f0f;
+  background: #111;
   color: #fff;
-}
-
-header {
-  text-align: center;
-  padding: 20px;
-  background: #000;
-}
-
-header h1 {
-  margin: 0;
-  color: #ffd84d;
-}
-
-.container {
+  max-width: 500px;
+  margin: auto;
   padding: 15px;
 }
 
-.section {
-  margin-bottom: 20px;
+h1 {
+  text-align: center;
 }
 
-.section h2 {
-  color: #ffd84d;
-  border-bottom: 1px solid #333;
-  padding-bottom: 5px;
+h2 {
+  background: #f4c430;
+  color: #000;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 18px;
 }
 
 .card {
-  background: #1c1c1c;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
+  background: #1e1e1e;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 15px;
 }
 
 label {
   display: block;
-  margin: 5px 0;
+  margin: 6px 0;
+  cursor: pointer;
 }
 
 input, select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
-  border-radius: 5px;
+  border-radius: 6px;
   border: none;
 }
 
 button {
   width: 100%;
+  background: #25D366;
+  color: #fff;
+  border: none;
   padding: 15px;
   font-size: 18px;
-  background: #25d366;
-  color: #000;
-  border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  margin-top: 20px;
+}
+
+#total {
+  text-align: center;
+  font-size: 22px;
+  margin: 15px 0;
+  color: #f4c430;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Pizzaria Italiano 🍕</h1>
-  <p>Pedidos rápidos pelo WhatsApp</p>
-</header>
+<h1>🍕 Pedido de Pizza</h1>
 
-<div class="container">
-
+<!-- TRADICIONAIS -->
 <div class="section">
-  <h2>🍕 Sabores Tradicionais</h2>
+  <h2>Tradicionais</h2>
   <div class="card">
-    <label><input type="checkbox" value="Mussarela"> Mussarela</label>
-    <label><input type="checkbox" value="Calabresa"> Calabresa</label>
-    <label><input type="checkbox" value="Marguerita"> Marguerita</label>
-    <label><input type="checkbox" value="Três Queijos"> Três Queijos</label>
-    <label><input type="checkbox" value="Presunto"> Presunto</label>
+    <label><input type="checkbox" data-tipo="tradicional" value="Mussarela" onchange="controleSabores()"> Mussarela</label>
+    <label><input type="checkbox" data-tipo="tradicional" value="Calabresa" onchange="controleSabores()"> Calabresa</label>
+    <label><input type="checkbox" data-tipo="tradicional" value="Marguerita" onchange="controleSabores()"> Marguerita</label>
+    <label><input type="checkbox" data-tipo="tradicional" value="Três Queijos" onchange="controleSabores()"> Três Queijos</label>
+    <label><input type="checkbox" data-tipo="tradicional" value="Presunto" onchange="controleSabores()"> Presunto</label>
   </div>
 </div>
 
+<!-- ESPECIAIS -->
 <div class="section">
-  <h2>⭐ Sabores Especiais</h2>
+  <h2>Especiais</h2>
   <div class="card">
-    <label><input type="checkbox" value="Frango"> Frango</label>
-    <label><input type="checkbox" value="Frango com Catupiry"> Frango com Catupiry</label>
-    <label><input type="checkbox" value="Frango com Cheddar"> Frango com Cheddar</label>
-    <label><input type="checkbox" value="Frango com Bacon"> Frango com Bacon</label>
-    <label><input type="checkbox" value="Frango com Calabresa"> Frango com Calabresa</label>
-    <label><input type="checkbox" value="Frango Acebolado"> Frango Acebolado</label>
-
-    <label><input type="checkbox" value="Provolone"> Provolone</label>
-    <label><input type="checkbox" value="Charque"> Charque</label>
-    <label><input type="checkbox" value="Carne de Sol"> Carne de Sol</label>
-    <label><input type="checkbox" value="Quatro Queijos"> Quatro Queijos</label>
-    <label><input type="checkbox" value="Portuguesa"> Portuguesa</label>
-    <label><input type="checkbox" value="Atum"> Atum</label>
-    <label><input type="checkbox" value="Pepperoni"> Pepperoni</label>
-    <label><input type="checkbox" value="Bacon"> Bacon</label>
-    <label><input type="checkbox" value="Baiana"> Baiana</label>
+    <label><input type="checkbox" data-tipo="especial" value="Frango" onchange="controleSabores()"> Frango</label>
+    <label><input type="checkbox" data-tipo="especial" value="Frango com Catupiry" onchange="controleSabores()"> Frango com Catupiry</label>
+    <label><input type="checkbox" data-tipo="especial" value="Frango com Cheddar" onchange="controleSabores()"> Frango com Cheddar</label>
+    <label><input type="checkbox" data-tipo="especial" value="Frango com Bacon" onchange="controleSabores()"> Frango com Bacon</label>
+    <label><input type="checkbox" data-tipo="especial" value="Frango com Calabresa" onchange="controleSabores()"> Frango com Calabresa</label>
+    <label><input type="checkbox" data-tipo="especial" value="Frango Acebolado" onchange="controleSabores()"> Frango Acebolado</label>
+    <label><input type="checkbox" data-tipo="especial" value="Quatro Queijos" onchange="controleSabores()"> Quatro Queijos</label>
+    <label><input type="checkbox" data-tipo="especial" value="Charque" onchange="controleSabores()"> Charque</label>
+    <label><input type="checkbox" data-tipo="especial" value="Carne de Sol" onchange="controleSabores()"> Carne de Sol</label>
+    <label><input type="checkbox" data-tipo="especial" value="Portuguesa" onchange="controleSabores()"> Portuguesa</label>
+    <label><input type="checkbox" data-tipo="especial" value="Atum" onchange="controleSabores()"> Atum</label>
+    <label><input type="checkbox" data-tipo="especial" value="Pepperoni" onchange="controleSabores()"> Pepperoni</label>
+    <label><input type="checkbox" data-tipo="especial" value="Bacon" onchange="controleSabores()"> Bacon</label>
+    <label><input type="checkbox" data-tipo="especial" value="Baiana" onchange="controleSabores()"> Baiana</label>
   </div>
 </div>
 
+<!-- DOCES -->
 <div class="section">
-  <h2>🍫 Sabores Doces</h2>
+  <h2>Doces</h2>
   <div class="card">
-    <label><input type="checkbox" value="Romeu e Julieta"> Romeu e Julieta</label>
-    <label><input type="checkbox" value="Cartola"> Cartola</label>
-    <label><input type="checkbox" value="Chocolate"> Chocolate</label>
-    <label><input type="checkbox" value="Choconana"> Choconana</label>
+    <label><input type="checkbox" data-tipo="doce" value="Romeu e Julieta" onchange="controleSabores()"> Romeu e Julieta</label>
+    <label><input type="checkbox" data-tipo="doce" value="Cartola" onchange="controleSabores()"> Cartola</label>
+    <label><input type="checkbox" data-tipo="doce" value="Chocolate" onchange="controleSabores()"> Chocolate</label>
+    <label><input type="checkbox" data-tipo="doce" value="Choconana" onchange="controleSabores()"> Choconana</label>
   </div>
 </div>
-  
-  <div class="section">
-    <h2>🧀 Borda</h2>
-    <select id="borda">
-      <option>Sem borda</option>
-      <option>Catupiry</option>
-      <option>Cheddar</option>
+
+<!-- BORDA -->
+<div class="section">
+  <h2>Borda</h2>
+  <div class="card">
+    <select id="borda" onchange="calcularPreco()">
+      <option value="0">Sem borda</option>
+      <option value="5">Catupiry (+R$5)</option>
+      <option value="5">Cheddar (+R$5)</option>
     </select>
   </div>
+</div>
 
-  <div class="section">
-    <h2>📍 Dados para entrega</h2>
-
+<!-- DADOS -->
+<div class="section">
+  <h2>Dados do Cliente</h2>
+  <div class="card">
     <input id="nome" placeholder="Seu nome">
     <input id="rua" placeholder="Rua">
     <input id="bairro" placeholder="Bairro">
     <input id="numero" placeholder="Número da casa">
     <input id="referencia" placeholder="Ponto de referência">
-    <input id="telefone" placeholder="Telefone para contato">
+    <input id="telefone" placeholder="Telefone">
   </div>
-
-  <button onclick="enviarPedido()">📲 Finalizar pedido no WhatsApp</button>
-
 </div>
 
+<h3 id="total">Total: R$ 0,00</h3>
+
+<button onclick="enviarPedido()">Enviar pedido no WhatsApp</button>
+
 <script>
+function controleSabores() {
+  const marcados = document.querySelectorAll('input[type="checkbox"]:checked');
+  if (marcados.length > 2) {
+    alert("Você pode escolher no máximo 2 sabores.");
+    event.target.checked = false;
+    return;
+  }
+  calcularPreco();
+}
+
+function calcularPreco() {
+  const sabores = document.querySelectorAll('input[type="checkbox"]:checked');
+  const borda = Number(document.getElementById("borda").value);
+  let total = 0;
+
+  if (sabores.length === 1) {
+    const tipo = sabores[0].dataset.tipo;
+    total = tipo === "tradicional" ? 30 : 35;
+  }
+
+  if (sabores.length === 2) {
+    const tipos = [...sabores].map(s => s.dataset.tipo);
+    total = tipos.every(t => t === "tradicional") ? 55 : 65;
+  }
+
+  total += borda;
+  document.getElementById("total").innerText = `Total: R$ ${total},00`;
+}
+
 function enviarPedido() {
-  let sabores = [];
-  document.querySelectorAll('input[type=checkbox]:checked')
-    .forEach(item => sabores.push(item.value));
+  const sabores = [...document.querySelectorAll('input[type="checkbox"]:checked')]
+    .map(s => s.value).join(" + ");
 
-  let mensagem =
-`🍕 *Pedido de Pizza*
+  const msg = `🍕 PEDIDO DE PIZZA
 
-Sabores:
-- ${sabores.join('\n- ')}
+Sabores: ${sabores}
+Borda: ${document.getElementById("borda").selectedOptions[0].text}
 
-Borda: ${document.getElementById('borda').value}
+Nome: ${nome.value}
+Rua: ${rua.value}
+Bairro: ${bairro.value}
+Número: ${numero.value}
+Referência: ${referencia.value}
+Telefone: ${telefone.value}
 
-Nome: ${document.getElementById('nome').value}
-Rua: ${document.getElementById('rua').value}
-Bairro: ${document.getElementById('bairro').value}
-Número: ${document.getElementById('numero').value}
-Referência: ${document.getElementById('referencia').value}
-
-📞 Contato: ${document.getElementById('telefone').value}
+${document.getElementById("total").innerText}
 `;
 
-  let numero = "5581981881666"; // <-- TROQUE SE PRECISAR
-  let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensagem);
-  window.open(url, "_blank");
+  const numeroWhats = "5581981881666"; // MUDE AQUI
+  window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(msg)}`);
 }
 </script>
 
