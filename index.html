@@ -1,76 +1,140 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Pedidos - Lanchonete</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Pedidos Online</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .item {
-      background: #fff;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-    }
-    button {
-      width: 100%;
-      padding: 15px;
-      background: #25D366;
-      color: white;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-  </style>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  margin: 0;
+  padding: 15px;
+}
+header {
+  background: #ff6a00;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+.card {
+  background: white;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card input {
+  transform: scale(1.3);
+}
+.total {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+button {
+  width: 100%;
+  padding: 18px;
+  background: #25D366;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+footer {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 12px;
+  color: #777;
+}
+</style>
 </head>
+
 <body>
 
-<h1>🍔 Cardápio</h1>
+<header>
+  <h1>🍔 Lanchonete</h1>
+  <p>Pedidos rápidos pelo WhatsApp</p>
+</header>
 
-<div class="item">
-  <input type="checkbox" value="X-Burger - R$12">
-  X-Burger - R$12
+<div class="card">
+  <label>
+    <input type="checkbox" data-preco="12" value="X-Burger">
+    X-Burger
+  </label>
+  <strong>R$ 12</strong>
 </div>
 
-<div class="item">
-  <input type="checkbox" value="Batata Frita - R$8">
-  Batata Frita - R$8
+<div class="card">
+  <label>
+    <input type="checkbox" data-preco="8" value="Batata Frita">
+    Batata Frita
+  </label>
+  <strong>R$ 8</strong>
 </div>
 
-<div class="item">
-  <input type="checkbox" value="Refrigerante - R$6">
-  Refrigerante - R$6
+<div class="card">
+  <label>
+    <input type="checkbox" data-preco="6" value="Refrigerante">
+    Refrigerante
+  </label>
+  <strong>R$ 6</strong>
 </div>
 
-<button onclick="enviarPedido()">📲 Pedir no WhatsApp</button>
+<div class="total">
+  Total: R$ <span id="total">0</span>
+</div>
+
+<button onclick="enviarPedido()">📲 Fazer pedido no WhatsApp</button>
+
+<footer>
+  Sistema simples de pedidos
+</footer>
 
 <script>
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const totalSpan = document.getElementById('total');
+
+checkboxes.forEach(cb => {
+  cb.addEventListener('change', calcularTotal);
+});
+
+function calcularTotal() {
+  let total = 0;
+  checkboxes.forEach(cb => {
+    if (cb.checked) {
+      total += Number(cb.dataset.preco);
+    }
+  });
+  totalSpan.innerText = total;
+}
+
 function enviarPedido() {
-  let itens = document.querySelectorAll('input:checked');
-  if (itens.length === 0) {
+  let pedido = '';
+  let total = totalSpan.innerText;
+
+  checkboxes.forEach(cb => {
+    if (cb.checked) {
+      pedido += `- ${cb.value}%0A`;
+    }
+  });
+
+  if (pedido === '') {
     alert('Selecione pelo menos um item!');
     return;
   }
 
-  let mensagem = 'Olá! Quero fazer o pedido:%0A';
+  let telefone = '5581981881666'; // ⚠️ TROQUE AQUI PELO NÚMERO REAL
+  let mensagem = `Olá! Quero fazer o pedido:%0A${pedido}%0ATotal: R$ ${total}`;
 
-  itens.forEach(item => {
-    mensagem += '- ' + item.value + '%0A';
-  });
-
-  let telefone = '+5581981881666'; // COLOQUE O WHATSAPP DA LANCHONETE AQUI
-  let url = 'https://wa.me/' + telefone + '?text=' + mensagem;
-
+  let url = `https://wa.me/${telefone}?text=${mensagem}`;
   window.open(url, '_blank');
 }
 </script>
